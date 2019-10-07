@@ -46,9 +46,21 @@ function main4() {
 
     }
 
+    function removeDuplicateChars_sam(string) {
+      let output = ''
+      for (let i=0; i<string.length; i++) {
+        if (!output.includes(string[i])) output = output+string[i]
+      }
+      return output
+    }
+
     removeDuplicateChars_andrew('hello')
     removeDuplicateChars_andrew('google')
     removeDuplicateChars_andrew("google all that you think can think of")
+
+    console.log(removeDuplicateChars_sam('hello'))
+    console.log(removeDuplicateChars_sam('google'))
+    console.log(removeDuplicateChars_sam("google all that you think can think of"))
 
 }
 
