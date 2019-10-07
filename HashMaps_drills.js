@@ -1,6 +1,6 @@
 const hashmap = require('./HashMap')
 
-function main() {
+function main1() {
 
     const lor = new hashmap
     lor.MAX_LOAD_RATIO = 0.5
@@ -28,4 +28,3 @@ function main() {
 
 }
 
-main()
