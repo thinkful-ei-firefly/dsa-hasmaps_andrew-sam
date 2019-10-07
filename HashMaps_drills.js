@@ -52,4 +52,23 @@ function main4() {
 
 }
 
-main4()
+function main5() {
+  function palindromeChecker(string) {
+    let map = new hashmap;
+    let unpairedLetters = 0;
+    for (let i=0; i< string.length; i++) {
+      let value = map.get(string[i])
+      if (value) {
+        unpairedLetters--
+        map.set(string[i], !value)
+      }
+      map.set(string[i], true)
+      unpairedLetters++
+    }
+    if (string.length % 2 === 0 && unpairedLetters === 0) return true
+    if (string.length % 2 !== 0 && unpairedLetters === 1) return true
+  }
+  palindromeChecker('abc')
+}
+
+main5()
