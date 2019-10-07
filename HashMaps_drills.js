@@ -28,39 +28,27 @@ function main1() {
 
 }
 function main4() {
-    //Both Andrew and Sam made our own functions for this on how we would code it. Both are shown and executed
-    function removeDuplicateChars_andrew(s) {
-        let arr = s.split('')
-        for (let i = 0; i < arr.length; i++) {
-            let thisValue = arr[i]
-            for (let j = i + 1; j < arr.length; j++) {
-                let checkValue = arr[j]
-                if (thisValue === checkValue) {
-                    arr[j] = ""
-                }
-                else { }
+    
+    function removeDuplicateChars(s) {
+        const map = new hashmap
+        let exit = []
+        for (let i = 0; i < s.length; i++) {
+            try {
+                map.get(s[i])
+            }
+            catch{
+                map.set(s[i], true)
+                exit.push(s[i])
             }
         }
-        let exit = arr.join("")
+        exit = exit.join('')
         console.log(exit)
-
+    
     }
-
-    function removeDuplicateChars_sam(string) {
-      let output = ''
-      for (let i=0; i<string.length; i++) {
-        if (!output.includes(string[i])) output = output+string[i]
-      }
-      return output
-    }
-
-    removeDuplicateChars_andrew('hello')
-    removeDuplicateChars_andrew('google')
-    removeDuplicateChars_andrew("google all that you think can think of")
-
-    console.log(removeDuplicateChars_sam('hello'))
-    console.log(removeDuplicateChars_sam('google'))
-    console.log(removeDuplicateChars_sam("google all that you think can think of"))
+    
+    removeDuplicateChars('hello')
+    removeDuplicateChars('google')
+    removeDuplicateChars("google all that you think can think of")
 
 }
 
