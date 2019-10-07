@@ -1,4 +1,4 @@
-class HashMap {
+class HashMap2 {
   constructor(initialCapacity=8) {
       this.length = 0;
       this._hashTable = [];
@@ -6,54 +6,88 @@ class HashMap {
       this._deleted = 0;
       this.MAX_LOAD_RATIO = 0.5;
       this.SIZE_RATIO = 3;
-      this.linkedLists = []
+      for (let i=0; i< initialCapacity; i++) {
+        this._hashTable[i] = new LinkedList
+      }
   }
+
+  //value: [key, data, deleted]
+  //next:
 
   get(key) {
       const index = this._findSlot(key);
-      if (this._hashTable[index] === undefined) {
-          throw new Error('Key error');
+      let list = this._hashTable[index]
+      let tempNode = list.head
+      while (tempNode !== null) {
+        if (tempNode.value.key === key) {
+          return tempNode.value.data
+        }
+        tempNode = tempNode.next
       }
-      return this._hashTable[index].value;
+      return null
+      // if (this._hashTable[index] === undefined) {
+      //     throw new Error('Key error');
+      // }
+      // return this._hashTable[index].value;
   }
 
   set(key, value){
-      const loadRatio = (this.length + this._deleted + 1) / this._capacity;
-      if (loadRatio > this.MAX_LOAD_RATIO) {
-          this._resize(this._capacity * this.SIZE_RATIO);
+    const index = this._findSlot(key);
+    let list = this._hashTable[index]
+    let tempNode = list.head
+      while (tempNode !== null) {
+        if (tempNode.value.key === key) {
+          tempNode.value.data = value
+          tempNode.value.deleted = false
+        }
+        tempNode = tempNode.next
       }
-      const index = this._findSlot(key);
+      list.insertLast({key: key, data: value, deleted: false})
+      // const loadRatio = (this.length + this._deleted + 1) / this._capacity;
+      // if (loadRatio > this.MAX_LOAD_RATIO) {
+      //     this._resize(this._capacity * this.SIZE_RATIO);
+      // }
+      // const index = this._findSlot(key);
 
-      if(!this._hashTable[index]){
-          this.length++;
-      }
-      this._hashTable[index] = {
-          key,
-          value,
-          DELETED: false
-      }; 
+      // if(!this._hashTable[index]){
+      //     this.length++;
+      // }
+      // this._hashTable[index] = {
+      //     key,
+      //     value,
+      //     DELETED: false
+      // }; 
   }
 
   delete(key) {
       const index = this._findSlot(key);
-      const slot = this._hashTable[index];
-      if (slot === undefined) {
-          throw new Error('Key error');
+      let list = this._hashTable[index]
+      let tempNode = list.head
+      while (tempNode !== null) {
+        if (tempNode.value[0] === key) {
+          tempNode.value.deleted = true
+        }
+        tempNode = tempNode.next
       }
-      slot.DELETED = true;
-      this.length--;
-      this._deleted++;
+      // const slot = this._hashTable[index];
+      // if (slot === undefined) {
+      //     throw new Error('Key error');
+      // }
+      // slot.DELETED = true;
+      // this.length--;
+      // this._deleted++;
   }
 
   _findSlot(key) {
-      const hash = HashMap._hashString(key);
+      const hash = HashMap2._hashString(key);
       const start = hash % this._capacity;
-      const slot = this._hashTable[start];
-      if (slot === undefined || slot.key === key && (!slot.DELETED)) {
-        return index;
-      } else if (slot === 'LinkedList') {
-        return index[list.find(key)]
-      }
+      return start
+      // if (slot === undefined || slot.key === key && (!slot.DELETED)) {
+      //   return index;
+      // } else if (typeof slot === 'object') {
+      //   let listIndex = this.linkedLists[index]
+      //   return index[listIndex]
+      // }
       // for (let i=start; i<start + this._capacity; i++) {
       //     const index = i % this._capacity;
       //     const slot = this._hashTable[index];
@@ -61,20 +95,20 @@ class HashMap {
       //         return index;
       //     }
       // }
-  }
+  // }
 
-  _resize(size) {
-      const oldSlots = this._hashTable;
-      this._capacity = size;
-      this.length = 0;
-      this._deleted = 0;
-      this._hashTable = [];
+  // _resize(size) {
+  //     const oldSlots = this._hashTable;
+  //     this._capacity = size;
+  //     this.length = 0;
+  //     this._deleted = 0;
+  //     this._hashTable = [];
 
-      for (const slot of oldSlots) {
-          if (slot !== undefined && !slot.DELETED) {
-              this.set(slot.key, slot.value);
-          }
-      }
+  //     for (const slot of oldSlots) {
+  //         if (slot !== undefined && !slot.DELETED) {
+  //             this.set(slot.key, slot.value);
+  //         }
+  //     }
   }
 
   static _hashString(string) {
@@ -213,11 +247,11 @@ class LinkedList {
   }
 }
 
-class Node {
+class _Node {
   constructor(value, next=null) {
     this.next = next;
     this.value = value;
   }
 }
 
-module.exports = HashMap
+module.exports = {HashMap2}
