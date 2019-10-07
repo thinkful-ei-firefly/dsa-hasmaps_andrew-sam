@@ -57,18 +57,47 @@ function main5() {
     let map = new hashmap;
     let unpairedLetters = 0;
     for (let i=0; i< string.length; i++) {
-      let value = map.get(string[i])
-      if (value) {
-        unpairedLetters--
-        map.set(string[i], !value)
+      let value
+      try {
+        value = map.get(string[i])
+        if (value) {
+          unpairedLetters--
+          map.set(string[i], !value)
+        } else {
+          unpairedLetters++
+          map.set(string[i], !value)
+        }
       }
-      map.set(string[i], true)
-      unpairedLetters++
+      catch {
+        unpairedLetters++
+        map.set(string[i], true)
+      }
     }
     if (string.length % 2 === 0 && unpairedLetters === 0) return true
     if (string.length % 2 !== 0 && unpairedLetters === 1) return true
+    return false
   }
-  palindromeChecker('abc')
+  console.log(palindromeChecker('acecarr'))
 }
 
-main5()
+function main6() {
+  function anagramGrouper(arr) {
+    let map = new hashmap
+    let exit = []
+    for (let i=0; i<arr.length; i++) {
+      let sorted = arr[i].split('').sort().join('');
+      try {
+        let value = map.get(sorted)
+        exit[value].push(arr[i])
+      }
+      catch {
+        map.set(sorted, exit.length)
+        exit.push([arr[i]])
+      }
+    }
+    return exit
+  }
+  console.log(anagramGrouper(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']))
+}
+
+main6()
